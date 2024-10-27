@@ -61,3 +61,32 @@ class HBnBFacade:
         if obj:
             obj.update(amenity_data)
         return obj
+
+    def create_place(self, place_data):
+        place = Place(**place_data)
+        self.place_repo.add(place)
+        return place
+
+    def get_place(self, place_id):
+        return self.place_repo.get(place_id)
+
+    def get_all_places(self):
+        return self.place_repo.get_all()
+
+    def update_place(self, place_id, place_data):
+        place = self.place_repo.get(place_id)
+        if place:
+            if 'title' in place_data:
+                place.title = place_data['title']
+            if 'description' in place_data:
+                place.description = place_data['description']
+            if 'price' in place_data:
+                place.price = place_data['price']
+            if 'latitude' in place_data:
+                place.latitude = place_data['latitude']
+            if 'longitude' in place_data:
+                place.longitude = place_data['longitude']
+            if 'owner_id' in place_data:
+                place.owner_id = place_data['owner_id']
+            self.place_repo.update(place, place_data)
+        return place
